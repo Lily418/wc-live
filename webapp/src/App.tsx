@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import * as Realm from "realm-web";
 import {
   Card,
   CardBody,
@@ -12,41 +10,19 @@ import {
 } from "@chakra-ui/react";
 import { Fixture } from "./components/Fixture";
 import { groupByDate } from "./groupByDate";
-import { LogoDocument } from "./types/logo";
-
-const app = new Realm.App({ id: "wc-live-rnchj" });
+import { FixtureDto, FixturesDto } from "../../shared-types/fixtures-dto";
 
 function App() {
-  const [fixtures, setFixtures] = useState<any[] | null>(null);
-  const [logos, setLogos] = useState<LogoDocument[]>([]);
+  const [fixtures, setFixtures] = useState<FixturesDto | null>(null);
 
   useEffect(() => {
     const login = async () => {
-      // Authenticate anonymously
-      const user = await app.logIn(Realm.Credentials.anonymous());
-
-      const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
-      const db = mongodb.db("wc-live");
-
-      const loadFixtures = async () => {
-        const fixturesCollection = db.collection("fixtures");
-        const fixtures = await fixturesCollection.find({});
-        setFixtures(fixtures);
-      };
-
-      const loadLogos = async () => {
-        const logosCollection = db.collection("logos");
-        const logos = await logosCollection.find({});
-        setLogos(logos);
-      };
-
-      await Promise.all([loadFixtures(), loadLogos()]);
+      const fixtures = await fetch("http://127.0.0.1:3333/fixtures");
+      const result = await fixtures.json();
+      setFixtures(result);
     };
     login();
   }, []);
-
-  console.log("fixtures", fixtures);
-  console.log("logos", logos);
 
   return (
     <ChakraProvider>
@@ -55,7 +31,7 @@ function App() {
           <div>Loading...</div>
         ) : (
           <Container maxWidth="container.xl">
-            {Object.entries(groupByDate(["fixture", "date"], fixtures)).map(
+            {Object.entries(groupByDate(["kickoff"], fixtures.fixtures)).map(
               ([date, fixturesOnDate]) => (
                 <Card>
                   <CardHeader>
@@ -74,12 +50,8 @@ function App() {
                     </Text>
                   </CardHeader>
                   <CardBody>
-                    {fixturesOnDate.map((fixture) => (
-                      <Fixture
-                        key={fixture._id.toString()}
-                        fixture={fixture}
-                        logos={logos}
-                      />
+                    {fixturesOnDate.map((fixture: FixtureDto) => (
+                      <Fixture key={fixture.id} fixture={fixture} />
                     ))}
                   </CardBody>
                 </Card>
