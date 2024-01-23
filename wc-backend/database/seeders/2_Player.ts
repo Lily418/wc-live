@@ -1,6 +1,7 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Player from 'App/Models/Player'
 import fs from 'fs'
+import he from 'he'
 
 export default class extends BaseSeeder {
   public async run() {
@@ -14,7 +15,7 @@ export default class extends BaseSeeder {
           playersFile.response.map((player: any) =>
             Player.create({
               footballApiId: player.player.id,
-              name: player.player.name,
+              name: he.decode(player.player.name),
             })
           )
         )
