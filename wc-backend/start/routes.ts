@@ -34,7 +34,11 @@ Route.get('/fixtures/:id', async ({ params }): Promise<FixtureDto> => {
   const fixture = await Fixture.query()
     .preload('homeTeam')
     .preload('awayTeam')
-    .preload('events')
+    .preload('events', async (eventsQuery) => {
+      eventsQuery.preload('team')
+      eventsQuery.preload('player')
+      eventsQuery.preload('assist')
+    })
     .preload('lineupPlayers')
     .preload('lineupCoaches')
     .where('id', params.id)

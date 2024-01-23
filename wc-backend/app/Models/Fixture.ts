@@ -92,26 +92,47 @@ export default class Fixture extends BaseModel {
   public toSummaryDto(): FixtureSummaryDto {
     return {
       id: this.id,
-      home_team_football_api_id: this.homeTeam.footballApiId,
-      away_team_football_api_id: this.awayTeam.footballApiId,
       home_team_score: this.homeTeamScore,
       away_team_score: this.awayTeamScore,
       away_team: {
+        id: this.awayTeam.id,
         name: this.awayTeam.name,
+        football_api_id: this.awayTeam.footballApiId,
       },
       home_team: {
+        id: this.homeTeam.id,
         name: this.homeTeam.name,
+        football_api_id: this.homeTeam.footballApiId,
       },
       kickoff: this.kickoff.toISO(),
     }
+  }
+
+  getPlayersFromTeam(teamId: number): LineupPlayer[] {
+    return this.lineupPlayers.filter((player) => player.teamId === teamId)
+  }
+
+  getCoachesFromTeam(teamId: number): LineupCoach[] {
+    return this.lineupCoaches.filter((coach) => coach.teamId === teamId)
   }
 
   public toDto(): FixtureDto {
     return {
       ...this.toSummaryDto(),
       events: this.events.map((event) => event.toDto()),
-      lineupPlayers: this.lineupPlayers.map((lineupPlayer) => lineupPlayer.toDto()),
-      lineupCoaches: this.lineupCoaches.map((lineupCoach) => lineupCoach.toDto()),
+      lineupPlayersHome: this.getPlayersFromTeam(this.homeTeam.id).map((lineupPlayer) =>
+        lineupPlayer.toDto()
+      ),
+      lineupPlayersAway: this.getPlayersFromTeam(this.awayTeam.id).map((lineupPlayer) =>
+        lineupPlayer.toDto()
+      ),
+      lineupCoachesHome: this.getCoachesFromTeam(this.homeTeam.id).map((lineupCoach) =>
+        lineupCoach.toDto()
+      ),
+
+      lineupCoachesAway: this.getCoachesFromTeam(this.awayTeam.id).map((lineupCoach) =>
+        lineupCoach.toDto()
+      ),
     }
   }
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import {
   Card,
@@ -14,54 +15,34 @@ import {
   FixtureSummaryDto,
   FixturesDto,
 } from "../../shared-types/fixtures-dto";
+import FixturesList from "./routes/root";
+import FixtureDetails from "./routes/fixture";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <FixturesList />,
+  },
+  { path: "/fixture/:id", element: <FixtureDetails /> },
+]);
 
 function App() {
-  const [fixtures, setFixtures] = useState<FixturesDto | null>(null);
-
-  useEffect(() => {
-    const login = async () => {
-      const fixtures = await fetch("http://127.0.0.1:3333/fixtures");
-      const result = await fixtures.json();
-      setFixtures(result);
-    };
-    login();
-  }, []);
-
   return (
     <ChakraProvider>
       <div className="App">
-        {!fixtures ? (
-          <div>Loading...</div>
-        ) : (
-          <Container maxWidth="container.xl">
-            {Object.entries(groupByDate(["kickoff"], fixtures.fixtures)).map(
-              ([date, fixturesOnDate]) => (
-                <Card>
-                  <CardHeader>
-                    <Text
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {new Date(date).toLocaleDateString("en-GB", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </Text>
-                  </CardHeader>
-                  <CardBody>
-                    {fixturesOnDate.map((fixture: FixtureSummaryDto) => (
-                      <Fixture key={fixture.id} fixture={fixture} />
-                    ))}
-                  </CardBody>
-                </Card>
-              )
-            )}
-          </Container>
-        )}
+        <RouterProvider router={router} />
+        <div>
+          <p
+            style={{
+              padding: "20px",
+              textAlign: "center",
+              fontSize: "12px",
+              color: "gray",
+            }}
+          >
+            icons by <a href="https://icons8.com/">icons8.com</a>
+          </p>
+        </div>
       </div>
     </ChakraProvider>
   );

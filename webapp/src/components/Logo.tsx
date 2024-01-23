@@ -1,17 +1,23 @@
 import { SkeletonCircle } from "@chakra-ui/react";
 
-export const Logo = ({ logoUrl }: { logoUrl: string }) => {
+export const Logo = ({
+  logoUrl,
+  size = 50,
+}: {
+  logoUrl: string;
+  size?: number;
+}) => {
   return logoUrl ? (
     <img
       style={{
-        height: "50px",
-        width: "50px",
+        height: `${size}px`,
+        width: `${size}px`,
       }}
       src={logoUrl}
       alt=""
       role="presentation"
     />
   ) : (
-    <SkeletonCircle width="50px" height="50px" />
+    <SkeletonCircle width={`${size}px`} height={`${size}px`} />
   );
 };

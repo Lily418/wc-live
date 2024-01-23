@@ -1,4 +1,6 @@
 export interface TeamDto {
+  id: number;
+  football_api_id: number;
   name: string;
 }
 
@@ -13,6 +15,7 @@ export interface EventDto {
   assistId: number | null;
   assistName: string | null;
   fixtureId: number;
+  detail: string | null;
 }
 
 export interface LineupPlayerDto {
@@ -34,8 +37,6 @@ export interface LineupCoachDto {
 
 export interface FixtureSummaryDto {
   id: number;
-  home_team_football_api_id: number;
-  away_team_football_api_id: number;
   home_team_score: number | null;
   away_team_score: number | null;
   away_team: TeamDto;
@@ -45,8 +46,10 @@ export interface FixtureSummaryDto {
 
 export type FixtureDto = FixtureSummaryDto & {
   events: EventDto[];
-  lineupPlayers: LineupPlayerDto[];
-  lineupCoaches: LineupCoachDto[];
+  lineupPlayersHome: LineupPlayerDto[];
+  lineupPlayersAway: LineupPlayerDto[];
+  lineupCoachesHome: LineupCoachDto[];
+  lineupCoachesAway: LineupCoachDto[];
 };
 
 export interface FixturesDto {

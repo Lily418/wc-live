@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasOne, belongsTo, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Team from './Team'
 import Player from './Player'
 import Fixture from './Fixture'
@@ -18,20 +18,20 @@ export default class Event extends BaseModel {
   @column()
   public type: 'goal' | 'card' | 'subst'
 
-  @hasOne(() => Team, {
-    localKey: 'teamId',
-    foreignKey: 'id',
+  @belongsTo(() => Team, {
+    localKey: 'id',
+    foreignKey: 'teamId',
   })
-  public team: HasOne<typeof Team>
+  public team: BelongsTo<typeof Team>
 
   @column()
   public teamId: number
 
-  @hasOne(() => Player, {
-    localKey: 'playerId',
-    foreignKey: 'id',
+  @belongsTo(() => Player, {
+    localKey: 'id',
+    foreignKey: 'playerId',
   })
-  public player: HasOne<typeof Player> | null
+  public player: BelongsTo<typeof Player>
 
   @column()
   public playerId: number
@@ -39,11 +39,11 @@ export default class Event extends BaseModel {
   @column()
   public playerName: string
 
-  @hasOne(() => Player, {
-    localKey: 'assistId',
-    foreignKey: 'id',
+  @belongsTo(() => Player, {
+    localKey: 'id',
+    foreignKey: 'assistId',
   })
-  public assist: HasOne<typeof Player>
+  public assist: BelongsTo<typeof Player>
 
   @column()
   public assistId: number | null
@@ -51,11 +51,11 @@ export default class Event extends BaseModel {
   @column()
   public assistName: string | null
 
-  @hasOne(() => Fixture, {
-    localKey: 'fixtureId',
-    foreignKey: 'id',
+  @belongsTo(() => Fixture, {
+    localKey: 'id',
+    foreignKey: 'fixtureId',
   })
-  public fixture: HasOne<typeof Fixture>
+  public fixture: BelongsTo<typeof Fixture>
 
   @column()
   public fixtureId: number
@@ -66,6 +66,9 @@ export default class Event extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
+  @column()
+  public detail: string | null
+
   public toDto(): EventDto {
     return {
       id: this.id,
@@ -74,10 +77,11 @@ export default class Event extends BaseModel {
       type: this.type,
       teamId: this.teamId,
       playerId: this.playerId,
-      playerName: this.playerName,
+      playerName: this.player?.name || this.playerName,
       assistId: this.assistId,
-      assistName: this.assistName,
+      assistName: this.assist?.name || this.assistName,
       fixtureId: this.fixtureId,
+      detail: this.detail,
     }
   }
 }

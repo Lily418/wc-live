@@ -23,6 +23,8 @@ export default class extends BaseSchema {
       table.string('player_name')
       table.string('assist_name').nullable()
 
+      table.string('detail').nullable()
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

@@ -36,6 +36,7 @@ export default class extends BaseSeeder {
             return Event.create({
               time_elapsed: event.time.elapsed,
               time_elapsed_extra: event.time.extra,
+              detail: event.detail,
               type: event.type.toLowerCase(),
               teamId: team!.id,
               playerId: player?.id,
