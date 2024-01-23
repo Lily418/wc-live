@@ -3,6 +3,7 @@ import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Team from './Team'
 import Player from './Player'
 import Fixture from './Fixture'
+import { EventDto } from '../../../shared-types/fixtures-dto'
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -64,4 +65,19 @@ export default class Event extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  public toDto(): EventDto {
+    return {
+      id: this.id,
+      time_elapsed: this.time_elapsed,
+      time_elapsed_extra: this.time_elapsed_extra,
+      type: this.type,
+      teamId: this.teamId,
+      playerId: this.playerId,
+      playerName: this.playerName,
+      assistId: this.assistId,
+      assistName: this.assistName,
+      fixtureId: this.fixtureId,
+    }
+  }
 }

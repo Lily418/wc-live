@@ -3,6 +3,7 @@ import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Player from './Player'
 import Team from './Team'
 import Fixture from './Fixture'
+import { LineupPlayerDto } from '../../../shared-types/fixtures-dto'
 
 export default class LineupPlayer extends BaseModel {
   @column({ isPrimary: true })
@@ -49,4 +50,16 @@ export default class LineupPlayer extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  public toDto(): LineupPlayerDto {
+    return {
+      id: this.id,
+      playerId: this.playerId,
+      teamId: this.teamId,
+      fixtureId: this.fixtureId,
+      playerNumber: this.playerNumber,
+      playerName: this.playerName,
+      substitute: this.substitute,
+    }
+  }
 }

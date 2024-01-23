@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Fixture from './Fixture'
 import Team from './Team'
+import { LineupCoachDto } from '../../../shared-types/fixtures-dto'
 
 export default class LineupCoach extends BaseModel {
   @column({ isPrimary: true })
@@ -33,4 +34,13 @@ export default class LineupCoach extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  public toDto(): LineupCoachDto {
+    return {
+      id: this.id,
+      fixtureId: this.fixtureId,
+      teamId: this.teamId,
+      name: this.name,
+    }
+  }
 }

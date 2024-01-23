@@ -1,7 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasMany, HasOne, column, hasMany, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Team from './Team'
-import { FixtureDto } from '../../../shared-types/fixtures-dto'
+import Event from './Event'
+import { FixtureDto, FixtureSummaryDto } from '../../../shared-types/fixtures-dto'
+import LineupPlayer from './LineupPlayer'
+import LineupCoach from './LineupCoach'
 
 // export type FixtureStatus =
 //   | 'FT'
@@ -43,6 +46,24 @@ export default class Fixture extends BaseModel {
   })
   public awayTeam: HasOne<typeof Team>
 
+  @hasMany(() => Event, {
+    localKey: 'id',
+    foreignKey: 'fixtureId',
+  })
+  public events: HasMany<typeof Event>
+
+  @hasMany(() => LineupPlayer, {
+    localKey: 'id',
+    foreignKey: 'fixtureId',
+  })
+  public lineupPlayers: HasMany<typeof LineupPlayer>
+
+  @hasMany(() => LineupCoach, {
+    localKey: 'id',
+    foreignKey: 'fixtureId',
+  })
+  public lineupCoaches: HasMany<typeof LineupCoach>
+
   @column()
   public homeTeamId: number
 
@@ -68,7 +89,7 @@ export default class Fixture extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  public toDto(): FixtureDto {
+  public toSummaryDto(): FixtureSummaryDto {
     return {
       id: this.id,
       home_team_football_api_id: this.homeTeam.footballApiId,
@@ -82,6 +103,15 @@ export default class Fixture extends BaseModel {
         name: this.homeTeam.name,
       },
       kickoff: this.kickoff.toISO(),
+    }
+  }
+
+  public toDto(): FixtureDto {
+    return {
+      ...this.toSummaryDto(),
+      events: this.events.map((event) => event.toDto()),
+      lineupPlayers: this.lineupPlayers.map((lineupPlayer) => lineupPlayer.toDto()),
+      lineupCoaches: this.lineupCoaches.map((lineupCoach) => lineupCoach.toDto()),
     }
   }
 }

@@ -10,7 +10,10 @@ import {
 } from "@chakra-ui/react";
 import { Fixture } from "./components/Fixture";
 import { groupByDate } from "./groupByDate";
-import { FixtureDto, FixturesDto } from "../../shared-types/fixtures-dto";
+import {
+  FixtureSummaryDto,
+  FixturesDto,
+} from "../../shared-types/fixtures-dto";
 
 function App() {
   const [fixtures, setFixtures] = useState<FixturesDto | null>(null);
@@ -50,7 +53,7 @@ function App() {
                     </Text>
                   </CardHeader>
                   <CardBody>
-                    {fixturesOnDate.map((fixture: FixtureDto) => (
+                    {fixturesOnDate.map((fixture: FixtureSummaryDto) => (
                       <Fixture key={fixture.id} fixture={fixture} />
                     ))}
                   </CardBody>

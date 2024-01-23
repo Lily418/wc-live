@@ -1,7 +1,7 @@
 import { Card, CardBody, Text } from "@chakra-ui/react";
 import { split, pipe, filter, join } from "ramda";
 import { Logo } from "./Logo";
-import { FixtureDto } from "../../../shared-types/fixtures-dto";
+import { FixtureSummaryDto } from "../../../shared-types/fixtures-dto";
 
 const formatName = (name: string) => {
   return pipe(
@@ -11,7 +11,7 @@ const formatName = (name: string) => {
   )(name);
 };
 
-export const Fixture = ({ fixture }: { fixture: FixtureDto }) => {
+export const Fixture = ({ fixture }: { fixture: FixtureSummaryDto }) => {
   return (
     <div
       style={{
