@@ -1,27 +1,27 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'events'
+  protected tableName = 'lineup_players'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      table.integer('time_elapsed')
-      table.integer('time_elapsed_extra')
-
-      table.enum('type', ['goal', 'card', 'subst'])
-
-      table.integer('team_id').unsigned().references('teams.id').onDelete('CASCADE')
-
       table.integer('player_id').unsigned().references('players.id').onDelete('CASCADE')
 
-      table.integer('assist_id').unsigned().references('players.id').onDelete('CASCADE')
+      table.integer('team_id').unsigned().references('teams.id').onDelete('CASCADE').notNullable()
 
-      table.integer('fixture_id').unsigned().references('fixtures.id').onDelete('CASCADE')
+      table
+        .integer('fixture_id')
+        .unsigned()
+        .references('fixtures.id')
+        .onDelete('CASCADE')
+        .notNullable()
 
-      table.string('player_name')
-      table.string('assist_name').nullable()
+      table.string('player_name').notNullable()
+      table.integer('player_number').notNullable()
+
+      table.boolean('substitute').notNullable()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

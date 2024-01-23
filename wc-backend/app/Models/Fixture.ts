@@ -3,6 +3,27 @@ import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Team from './Team'
 import { FixtureDto } from '../../../shared-types/fixtures-dto'
 
+// export type FixtureStatus =
+//   | 'FT'
+//   | 'NS'
+//   | '1H'
+//   | 'HT'
+//   | '2H'
+//   | 'ET'
+//   | 'BT'
+//   | 'P'
+//   | 'SUSP'
+//   | 'INT'
+//   | 'FT'
+//   | 'AET'
+//   | 'PEN'
+//   | 'PST'
+//   | 'CANC'
+//   | 'ABD'
+//   | 'AWD'
+//   | 'WO'
+//   | 'LIVE'
+
 export default class Fixture extends BaseModel {
   @column({ isPrimary: true })
   public id: number
@@ -36,6 +57,10 @@ export default class Fixture extends BaseModel {
 
   @column.dateTime()
   public kickoff: DateTime
+
+  // Statues as per https://www.api-football.com/documentation-v3#tag/Fixtures/operation/get-fixtures
+  @column()
+  public status: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

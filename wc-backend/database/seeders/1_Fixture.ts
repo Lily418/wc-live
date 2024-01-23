@@ -1,6 +1,6 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import fixtures from '../seed_data/fixtures.json'
-import Fixture from 'App/Models/Fixture'
+import Fixture, { FixtureStatus } from 'App/Models/Fixture'
 import { DateTime } from 'luxon'
 import Team from 'App/Models/Team'
 
@@ -27,6 +27,7 @@ export default class extends BaseSeeder {
           homeTeamScore: fixture.score.fulltime.home,
           awayTeamScore: fixture.score.fulltime.away,
           kickoff: DateTime.fromISO(fixture.fixture.date),
+          status: fixture.fixture.status.short as FixtureStatus,
         })
       })
     )

@@ -17,6 +17,30 @@ export default class extends BaseSchema {
 
       table.dateTime('kickoff').notNullable()
 
+      table
+        .enum('status', [
+          'FT',
+          'NS',
+          '1H',
+          'HT',
+          '2H',
+          'ET',
+          'BT',
+          'P',
+          'SUSP',
+          'INT',
+          'FT',
+          'AET',
+          'PEN',
+          'PST',
+          'CANC',
+          'ABD',
+          'AWD',
+          'WO',
+          'LIVE',
+        ])
+        .notNullable()
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

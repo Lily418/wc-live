@@ -29,3 +29,5 @@ Route.get('/fixtures', async (): Promise<FixturesDto> => {
     ),
   }
 })
+
+Route.get('/fixtures/:id', async ({ params }) => {})

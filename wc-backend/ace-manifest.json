@@ -1,5 +1,49 @@
 {
   "commands": {
+    "update:events": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/update-events",
+      "commandName": "update:events",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
+    "update:lineups": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/update-lineups",
+      "commandName": "update:lineups",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
+    "update:players": {
+      "settings": {
+        "loadApp": false,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/update-players",
+      "commandName": "update:players",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": [
+        {
+          "name": "start-page",
+          "propertyName": "startPage",
+          "type": "number",
+          "alias": "s",
+          "description": "Page on the API to start at"
+        }
+      ]
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",
