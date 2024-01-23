@@ -1,58 +1,56 @@
-import React from "react";
-import { useEffect, useState } from "react";
 import {
-  FixtureSummaryDto,
-  FixturesDto,
-} from "../../../shared-types/fixtures-dto";
-import { Card, CardBody, CardHeader, Container, Text } from "@chakra-ui/react";
-import { groupByDate } from "../groupByDate";
-import { Fixture } from "../components/Fixture";
-import { Link } from "react-router-dom";
+  Container,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
-export default function FixturesList() {
-  const [fixtures, setFixtures] = useState<FixturesDto | null>(null);
+export default function Root() {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchFixtures = async () => {
-      const fixtures = await fetch("http://127.0.0.1:3333/fixtures");
-      const result = await fixtures.json();
-      setFixtures(result);
-    };
-    fetchFixtures();
-  }, []);
+  let tabIndex = 0;
+  switch (window.location.pathname) {
+    case "/fixtures":
+      tabIndex = 1;
+      break;
+    case "/results":
+      tabIndex = 2;
+      break;
+  }
 
-  return !fixtures ? (
-    <div>Loading...</div>
-  ) : (
+  return (
     <Container maxWidth="container.xl">
-      {Object.entries(groupByDate(["kickoff"], fixtures.fixtures)).map(
-        ([date, fixturesOnDate]) => (
-          <Card>
-            <CardHeader>
-              <Text
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                {new Date(date).toLocaleDateString("en-GB", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </Text>
-            </CardHeader>
-            <CardBody>
-              {fixturesOnDate.map((fixture: FixtureSummaryDto) => (
-                <Link to={`/fixture/${fixture.id}`}>
-                  <Fixture key={fixture.id} fixture={fixture} />
-                </Link>
-              ))}
-            </CardBody>
-          </Card>
-        )
-      )}
+      <Tabs
+        index={tabIndex}
+        onChange={(index) => {
+          switch (index) {
+            case 0:
+              navigate("/");
+              break;
+            case 1:
+              navigate("/fixtures");
+              break;
+            case 2:
+              navigate("/results");
+              break;
+          }
+        }}
+      >
+        <TabList>
+          <Tab>Live</Tab>
+          <Tab>Fixtures</Tab>
+          <Tab>Results</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>{<Outlet />}</TabPanel>
+          <TabPanel>{<Outlet />}</TabPanel>
+          <TabPanel>{<Outlet />}</TabPanel>
+        </TabPanels>
+      </Tabs>
     </Container>
   );
 }

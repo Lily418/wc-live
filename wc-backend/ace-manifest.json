@@ -12,6 +12,18 @@
       "aliases": [],
       "flags": []
     },
+    "update:fixtures": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/update-fixtures",
+      "commandName": "update:fixtures",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "update:lineups": {
       "settings": {
         "loadApp": true,

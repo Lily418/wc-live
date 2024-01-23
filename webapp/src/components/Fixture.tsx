@@ -13,6 +13,7 @@ export const Fixture = ({ fixture }: { fixture: FixtureSummaryDto }) => {
         gridTemplateColumns: "50px 1fr 1fr 1fr 50px",
         alignItems: "center",
         padding: "20px 0",
+        textAlign: "center",
       }}
     >
       <Logo

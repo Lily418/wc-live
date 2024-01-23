@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { FixtureDto } from "../../../shared-types/fixtures-dto";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { Fixture } from "../components/Fixture";
 import {
   Box,
@@ -18,18 +18,11 @@ import { Lineup } from "../components/Lineup";
 import { Events } from "../components/Events";
 
 export default function FixtureDetails() {
-  let { id } = useParams();
-
-  const [fixture, setFixture] = useState<FixtureDto | null>(null);
+  const fixture = useLoaderData() as FixtureDto;
 
   useEffect(() => {
-    const fetchFixture = async () => {
-      const fixture = await fetch(`http://127.0.0.1:3333/fixtures/${id}`);
-      const result = await fixture.json();
-      setFixture(result);
-    };
-    fetchFixture();
-  }, [id]);
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!fixture) return <div>Loading...</div>;
 
@@ -37,7 +30,7 @@ export default function FixtureDetails() {
     <Container maxWidth="container.xl">
       <Card margin={"20px 0"}>
         <CardBody>
-          <Fixture key={id} fixture={fixture} />
+          <Fixture key={fixture.id} fixture={fixture} />
         </CardBody>
       </Card>
       <Box padding="20px 0">

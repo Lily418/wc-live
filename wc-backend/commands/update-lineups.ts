@@ -50,7 +50,8 @@ export default class UpdateEvents extends BaseCommand {
 
   public async run() {
     const { default: Fixture } = await import('App/Models/Fixture')
-    const fixtures = await Fixture.query().where('status', '=', 'FT')
+    const fixtures = await Fixture.query().where('status', '=', 'FT').andDoesntHave('lineupPlayers')
+
     for (const fixture of fixtures) {
       await this.fetchLineups(fixture.footballApiId)
       // API rate limit is 10 requests per minute

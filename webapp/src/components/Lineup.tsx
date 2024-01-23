@@ -39,7 +39,7 @@ export const Lineup = ({
       </div>
       <div>
         <Heading as="h4" size="sm">
-          Starting XI
+          Starting
         </Heading>
         <div>
           {playerLineup
@@ -56,7 +56,7 @@ export const Lineup = ({
 
       <div>
         <Heading as="h4" size="sm">
-          Substitutions
+          Substitutes
         </Heading>
         <div>
           {playerLineup

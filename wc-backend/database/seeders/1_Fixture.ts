@@ -3,6 +3,7 @@ import fixtures from '../seed_data/fixtures.json'
 import Fixture, { FixtureStatus } from 'App/Models/Fixture'
 import { DateTime } from 'luxon'
 import Team from 'App/Models/Team'
+import { logger } from 'Config/app'
 
 export default class extends BaseSeeder {
   public async run() {
@@ -18,6 +19,11 @@ export default class extends BaseSeeder {
 
         if (!awayTeam) {
           throw new Error(`Team not found with footballApiId: ${fixture.teams.away.id}`)
+        }
+
+        if (fixture.fixture.status.short === 'PST') {
+          console.log(`Skipping fixture ${fixture.fixture.id} because it is postponed`)
+          return
         }
 
         return Fixture.create({
