@@ -73,6 +73,7 @@ export default class extends BaseSeeder {
 
         if (!fixture) {
           console.error(`Fixture with footballApiId ${fixtureFootballApiId} not found`)
+          return
         }
 
         await Promise.all(

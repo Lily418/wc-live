@@ -6,28 +6,26 @@ import { FixtureDto, FixtureSummaryDto } from '../../../shared-types/fixtures-dt
 import LineupPlayer from './LineupPlayer'
 import LineupCoach from './LineupCoach'
 
-// export type FixtureStatus =
-//   | 'FT'
-//   | 'NS'
-//   | '1H'
-//   | 'HT'
-//   | '2H'
-//   | 'ET'
-//   | 'BT'
-//   | 'P'
-//   | 'SUSP'
-//   | 'INT'
-//   | 'FT'
-//   | 'AET'
-//   | 'PEN'
-//   | 'PST'
-//   | 'CANC'
-//   | 'ABD'
-//   | 'AWD'
-//   | 'WO'
-//   | 'LIVE'
+export const scheduledFixtureStatuses = ['TBD', 'NS']
+export const inplayFixtureStatues = ['1H', 'HT', '2H', 'ET', 'BT', 'P', 'SUSP', 'INT', 'LIVE']
+export const finishedFixtureStatuses = ['FT', 'AET', 'PEN']
+export const postponedFixtureStatuses = ['PST']
+export const abandonedFixtureStatuses = ['ABD']
+export const cancelledFixtureStatuses = ['CANC']
+export const notPlayedFixtureStatuses = ['AWD', 'WO']
 
 export default class Fixture extends BaseModel {
+  public static async getFixturesInPlay() {
+    return await Fixture.query().andWhereIn('status', [
+      ...scheduledFixtureStatuses,
+      ...inplayFixtureStatues,
+    ])
+    // const inProgress = await Fixture.query()
+    //   .where('kickoff', '<', DateTime.now().toSQL())
+    //   .andWhereIn('status', [...scheduledFixtureStatuses, ...inplayFixtureStatues])
+    // return inProgress
+  }
+
   @column({ isPrimary: true })
   public id: number
 

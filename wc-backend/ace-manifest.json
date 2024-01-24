@@ -1,17 +1,5 @@
 {
   "commands": {
-    "update:events": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": false
-      },
-      "commandPath": "./commands/update-events",
-      "commandName": "update:events",
-      "description": "",
-      "args": [],
-      "aliases": [],
-      "flags": []
-    },
     "update:fixtures": {
       "settings": {
         "loadApp": true,
@@ -24,6 +12,18 @@
       "aliases": [],
       "flags": []
     },
+    "update:events": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/update-historic-events",
+      "commandName": "update:events",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "update:lineups": {
       "settings": {
         "loadApp": true,
@@ -31,6 +31,18 @@
       },
       "commandPath": "./commands/update-lineups",
       "commandName": "update:lineups",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
+    "update:live_events": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": true
+      },
+      "commandPath": "./commands/update-live-events",
+      "commandName": "update:live_events",
       "description": "",
       "args": [],
       "aliases": [],
