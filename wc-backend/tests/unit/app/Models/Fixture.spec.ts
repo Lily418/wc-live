@@ -3,7 +3,7 @@ import Fixture from '#app/Models/Fixture'
 import { DateTime } from 'luxon'
 
 test.group('Fixture', (group) => {
-  group.each.teardown(async () => {
+  group.each.setup(async () => {
     await Fixture.query().delete()
   })
 
@@ -67,26 +67,26 @@ test.group('Fixture', (group) => {
       kickoff: kickoffTime,
       status: 'NS',
     })
+  })
 
-    test('does not return a fixture not scheduled to start yet', async ({ assert }) => {
-      const kickoffTime = DateTime.now().plus({ hour: 1 }).toISO()
-      await Fixture.create({
-        footballApiId: 1,
-        homeTeamId: 1,
-        awayTeamId: 5,
-        homeTeamScore: null,
-        awayTeamScore: null,
-        kickoff: DateTime.fromISO(kickoffTime),
-        status: 'NS',
-      })
-
-      // WHEN
-      const result = await Fixture.getFixturesInPlay()
-
-      console.log('result', result)
-
-      // THEN
-      assert.equal(result.length, 0)
+  test('does not return a fixture not scheduled to start yet', async ({ assert }) => {
+    const kickoffTime = DateTime.now().plus({ hour: 1 }).toISO()
+    await Fixture.create({
+      footballApiId: 1,
+      homeTeamId: 1,
+      awayTeamId: 5,
+      homeTeamScore: null,
+      awayTeamScore: null,
+      kickoff: DateTime.fromISO(kickoffTime),
+      status: 'NS',
     })
+
+    // WHEN
+    const result = await Fixture.getFixturesInPlay()
+
+    console.log('result', result)
+
+    // THEN
+    assert.equal(result.length, 0)
   })
 })
