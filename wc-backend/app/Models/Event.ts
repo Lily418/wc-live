@@ -7,6 +7,33 @@ import { EventDto } from '../../../shared-types/fixtures-dto.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class Event extends BaseModel {
+  public async updateFromFootballApi(event: any, fixtureId: number) {
+    const team = await Team.findBy('footballApiId', event.team.id)
+    const player = await Player.findBy('footballApiId', event.player.id)
+    const assist = await Player.findBy('footballApiId', event.assist?.id)
+
+    if (!team) {
+      console.error(`Team with footballApiId ${event.team.id} not found`)
+    }
+
+    if (!player && event.player.id !== null) {
+      console.error(`Player with footballApiId ${event.player.id} not found`)
+    }
+
+    if (event.assist?.id && !assist) {
+      console.error(`Player with footballApiId ${event.assist.id} not found`)
+    }
+
+    this.time_elapsed = event.time.elapsed
+    this.time_elapsed_extra = event.time.extra
+    this.detail = event.detail
+    this.type = event.type.toLowerCase()
+    this.teamId = team!.id
+    this.playerId = player!.id
+    this.assistId = assist!.id
+    this.fixtureId = fixtureId
+  }
+
   @column({ isPrimary: true })
   public id: number
 

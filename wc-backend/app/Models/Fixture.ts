@@ -23,6 +23,32 @@ export default class Fixture extends BaseModel {
       .andWhereIn('status', [...scheduledFixtureStatuses, ...inplayFixtureStatues])
   }
 
+  public async updateFixtureFromFootballApi(fixture: any) {
+    const homeTeam = await Team.findBy('footballApiId', fixture.teams.home.id)
+    const awayTeam = await Team.findBy('footballApiId', fixture.teams.away.id)
+
+    if (!homeTeam) {
+      throw new Error(`Team not found with footballApiId: ${fixture.teams.home.id}`)
+    }
+
+    if (!awayTeam) {
+      throw new Error(`Team not found with footballApiId: ${fixture.teams.away.id}`)
+    }
+
+    if (fixture.fixture.status.short === 'PST') {
+      console.log(`Skipping fixture ${fixture.fixture.id} because it is postponed`)
+      return
+    }
+
+    this.footballApiId = fixture.fixture.id
+    this.homeTeamId = homeTeam.id
+    this.awayTeamId = awayTeam.id
+    this.homeTeamScore = fixture.score.fulltime.home
+    this.awayTeamScore = fixture.score.fulltime.away
+    this.kickoff = DateTime.fromISO(fixture.fixture.date)
+    this.status = fixture.fixture.status.short
+  }
+
   @column({ isPrimary: true })
   public id: number
 

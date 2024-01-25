@@ -1,8 +1,12 @@
 import Fixture, { scheduledFixtureStatuses, inplayFixtureStatues } from '#app/Models/Fixture'
+import Event from '#app/Models/Event'
 import { DateTime } from 'luxon'
 import { BaseCommand } from '@adonisjs/core/ace'
 import { CommandOptions } from '@adonisjs/core/types/ace'
 import axios from 'axios'
+import db from '@adonisjs/lucid/services/db'
+import Team from '#app/Models/Team'
+import Player from '#app/Models/Player'
 
 export default class UpdateLiveEvents extends BaseCommand {
   /**
@@ -16,7 +20,7 @@ export default class UpdateLiveEvents extends BaseCommand {
   public static description = ''
   static options: CommandOptions = {
     loadApp: true,
-    staysAlive: true,
+    staysAlive: false,
   }
 
   public async run() {
@@ -37,7 +41,56 @@ export default class UpdateLiveEvents extends BaseCommand {
     await Promise.all(
       response.data.response.map(async (fixture: any) => {
         const fixtureInDb = await Fixture.findByOrFail('footballApiId', fixture.fixture.id)
-        fixtureInDb.status = fixture.fixture.status.short
+
+        const trx = await db.transaction()
+        await trx.query().from('events').where('fixture_id', fixtureInDb.id).delete()
+        await Promise.all(
+          fixture.events.map(async (event: any) => {
+            const team = await trx
+              .query()
+              .from('teams')
+              .where('football_api_id', event.team.id)
+              .first()
+
+            const player = await trx
+              .query()
+              .from('players')
+              .where('football_api_id', event.player.id)
+              .first()
+
+            const assist = await trx
+              .query()
+              .from('players')
+              .where('football_api_id', event.assist?.id)
+              .first()
+
+            if (!team) {
+              console.error(`Team with footballApiId ${event.team.id} not found`)
+            }
+
+            if (!player && event.player.id !== null) {
+              console.error(`Player with footballApiId ${event.player.id} not found`)
+            }
+
+            if (event.assist?.id && !assist) {
+              console.error(`Player with footballApiId ${event.assist.id} not found`)
+            }
+
+            await trx.insertQuery().table('events').insert({
+              time_elapsed: event.time.elapsed,
+              time_elapsed_extra: event.time.extra,
+              type: event.type.toLowerCase(),
+              detail: event.detail,
+              fixture_id: fixtureInDb.id,
+              team_id: team!.id,
+              player_id: player!.id,
+              assist_id: assist!.id,
+            })
+          })
+        )
+        await trx.commit()
+
+        await fixtureInDb.updateFixtureFromFootballApi(fixture)
         await fixtureInDb.save()
       })
     )
