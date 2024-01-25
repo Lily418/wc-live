@@ -41,7 +41,7 @@
     "pino-pretty": "^10.3.1",
     "prettier": "^3.2.4",
     "ts-node": "^10.9.2",
-    "typescript": "~4.6"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@adonisjs/core": "^6.2.1",
