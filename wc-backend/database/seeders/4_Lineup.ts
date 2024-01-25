@@ -1,10 +1,10 @@
 import fs from 'fs'
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-import Fixture from 'App/Models/Fixture'
-import Team from 'App/Models/Team'
-import Player from 'App/Models/Player'
-import LineupPlayer from 'App/Models/LineupPlayer'
-import LineupCoach from 'App/Models/LineupCoach'
+import Fixture from '#app/Models/Fixture'
+import Team from '#app/Models/Team'
+import Player from '#app/Models/Player'
+import LineupPlayer from '#app/Models/LineupPlayer'
+import LineupCoach from '#app/Models/LineupCoach'
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   private createLineupPlayer = async ({

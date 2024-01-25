@@ -18,11 +18,11 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
-import Fixture from 'App/Models/Fixture'
-import { FixtureDto, FixturesDto } from '../../shared-types/fixtures-dto'
+import router from '@adonisjs/core/services/router'
+import Fixture from '#app/Models/Fixture'
+import { FixtureDto, FixturesDto } from '../../shared-types/fixtures-dto.js'
 
-Route.get('/fixtures', async (): Promise<FixturesDto> => {
+router.get('/fixtures', async (): Promise<FixturesDto> => {
   return {
     fixtures: (await Fixture.query().preload('homeTeam').preload('awayTeam')).map((fixture) =>
       fixture.toSummaryDto()
@@ -30,7 +30,7 @@ Route.get('/fixtures', async (): Promise<FixturesDto> => {
   }
 })
 
-Route.get('/fixtures/:id', async ({ params }): Promise<FixtureDto> => {
+router.get('/fixtures/:id', async ({ params }): Promise<FixtureDto> => {
   const fixture = await Fixture.query()
     .preload('homeTeam')
     .preload('awayTeam')

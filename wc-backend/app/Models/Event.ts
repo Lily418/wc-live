@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, HasOne, belongsTo, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import Team from './Team'
-import Player from './Player'
-import Fixture from './Fixture'
-import { EventDto } from '../../../shared-types/fixtures-dto'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import Team from './Team.js'
+import Player from './Player.js'
+import Fixture from './Fixture.js'
+import { EventDto } from '../../../shared-types/fixtures-dto.js'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })

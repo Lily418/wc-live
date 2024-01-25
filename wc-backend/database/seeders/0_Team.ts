@@ -1,6 +1,6 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-import Team from 'App/Models/Team'
-import teams from '../seed_data/teams.json'
+import Team from '#app/Models/Team'
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
+import teams from '../seed_data/teams.json' assert { type: 'json' }
 
 export default class extends BaseSeeder {
   public async run() {

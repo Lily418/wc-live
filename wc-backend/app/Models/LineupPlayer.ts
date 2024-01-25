@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import Player from './Player'
-import Team from './Team'
-import Fixture from './Fixture'
-import { LineupPlayerDto } from '../../../shared-types/fixtures-dto'
+import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
+import Player from './Player.js'
+import Team from './Team.js'
+import Fixture from './Fixture.js'
+import { LineupPlayerDto } from '../../../shared-types/fixtures-dto.js'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
 
 export default class LineupPlayer extends BaseModel {
   @column({ isPrimary: true })

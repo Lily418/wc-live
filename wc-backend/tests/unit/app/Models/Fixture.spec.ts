@@ -1,10 +1,10 @@
 import { test } from '@japa/runner'
-import Fixture from 'App/Models/Fixture'
+import Fixture from '#app/Models/Fixture'
 import { DateTime } from 'luxon'
 
 test.group('Fixture', (group) => {
-  group.each.setup(async () => {
-    await Fixture.truncate()
+  group.each.teardown(async () => {
+    await Fixture.query().delete()
   })
 
   test('returns no fixtures when none exist', async ({ assert }) => {
@@ -36,16 +36,18 @@ test.group('Fixture', (group) => {
     assert.deepEqual(result, [])
   })
 
-  test('returns a fixture which has not started', async ({ assert }) => {
+  test('returns a fixture which has not started but kickoff time has passed', async ({
+    assert,
+  }) => {
     // GIVEN
-    const kickoffTime = DateTime.now().plus({ minutes: 1 }).toISODate()
+    const kickoffTime = DateTime.now().minus({ minutes: 1 }).startOf('second')
     await Fixture.create({
       footballApiId: 1,
       homeTeamId: 1,
       awayTeamId: 2,
       homeTeamScore: null,
       awayTeamScore: null,
-      kickoff: DateTime.fromISO(kickoffTime),
+      kickoff: kickoffTime,
       status: 'NS',
     })
 
@@ -62,8 +64,29 @@ test.group('Fixture', (group) => {
       awayTeamId: 2,
       homeTeamScore: null,
       awayTeamScore: null,
-      kickoff: DateTime.fromISO(kickoffTime),
+      kickoff: kickoffTime,
       status: 'NS',
+    })
+
+    test('does not return a fixture not scheduled to start yet', async ({ assert }) => {
+      const kickoffTime = DateTime.now().plus({ hour: 1 }).toISO()
+      await Fixture.create({
+        footballApiId: 1,
+        homeTeamId: 1,
+        awayTeamId: 5,
+        homeTeamScore: null,
+        awayTeamScore: null,
+        kickoff: DateTime.fromISO(kickoffTime),
+        status: 'NS',
+      })
+
+      // WHEN
+      const result = await Fixture.getFixturesInPlay()
+
+      console.log('result', result)
+
+      // THEN
+      assert.equal(result.length, 0)
     })
   })
 })

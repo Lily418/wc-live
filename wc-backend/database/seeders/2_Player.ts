@@ -1,5 +1,5 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-import Player from 'App/Models/Player'
+import Player from '#app/Models/Player'
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import fs from 'fs'
 import he from 'he'
 

@@ -1,10 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasMany, HasOne, column, hasMany, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import Team from './Team'
-import Event from './Event'
-import { FixtureDto, FixtureSummaryDto } from '../../../shared-types/fixtures-dto'
-import LineupPlayer from './LineupPlayer'
-import LineupCoach from './LineupCoach'
+import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import Team from './Team.js'
+import Event from './Event.js'
+import { FixtureDto, FixtureSummaryDto } from '../../../shared-types/fixtures-dto.js'
+import LineupPlayer from './LineupPlayer.js'
+import LineupCoach from './LineupCoach.js'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
 
 export const scheduledFixtureStatuses = ['TBD', 'NS']
 export const inplayFixtureStatues = ['1H', 'HT', '2H', 'ET', 'BT', 'P', 'SUSP', 'INT', 'LIVE']
@@ -16,14 +18,9 @@ export const notPlayedFixtureStatuses = ['AWD', 'WO']
 
 export default class Fixture extends BaseModel {
   public static async getFixturesInPlay() {
-    return await Fixture.query().andWhereIn('status', [
-      ...scheduledFixtureStatuses,
-      ...inplayFixtureStatues,
-    ])
-    // const inProgress = await Fixture.query()
-    //   .where('kickoff', '<', DateTime.now().toSQL())
-    //   .andWhereIn('status', [...scheduledFixtureStatuses, ...inplayFixtureStatues])
-    // return inProgress
+    return await Fixture.query()
+      .where('kickoff', '<', DateTime.now().toSQL())
+      .andWhereIn('status', [...scheduledFixtureStatuses, ...inplayFixtureStatues])
   }
 
   @column({ isPrimary: true })

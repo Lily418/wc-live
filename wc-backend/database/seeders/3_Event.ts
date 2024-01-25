@@ -1,9 +1,9 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-import Fixture from 'App/Models/Fixture'
-import Event from 'App/Models/Event'
+import Fixture from '#app/Models/Fixture'
+import Event from '#app/Models/Event'
 import fs from 'fs'
-import Player from 'App/Models/Player'
-import Team from 'App/Models/Team'
+import Player from '#app/Models/Player'
+import Team from '#app/Models/Team'
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   public async run() {

@@ -1,9 +1,8 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-import fixtures from '../seed_data/fixtures.json'
-import Fixture, { FixtureStatus } from 'App/Models/Fixture'
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
+import fixtures from '../seed_data/fixtures.json' assert { type: 'json' }
+import Fixture from '#app/Models/Fixture'
 import { DateTime } from 'luxon'
-import Team from 'App/Models/Team'
-import { logger } from 'Config/app'
+import Team from '#app/Models/Team'
 
 export default class extends BaseSeeder {
   public async run() {
@@ -33,7 +32,7 @@ export default class extends BaseSeeder {
           homeTeamScore: fixture.score.fulltime.home,
           awayTeamScore: fixture.score.fulltime.away,
           kickoff: DateTime.fromISO(fixture.fixture.date),
-          status: fixture.fixture.status.short as FixtureStatus,
+          status: fixture.fixture.status.short,
         })
       })
     )
