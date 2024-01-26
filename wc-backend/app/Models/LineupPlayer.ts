@@ -8,49 +8,49 @@ import type { HasOne } from '@adonisjs/lucid/types/relations'
 
 export default class LineupPlayer extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id!: number
 
   @hasOne(() => Player, {
     localKey: 'playerId',
     foreignKey: 'id',
   })
-  public player: HasOne<typeof Player>
+  public player!: HasOne<typeof Player>
 
   @column()
-  public playerId: number
+  public playerId!: number
 
   @hasOne(() => Team, {
     localKey: 'teamId',
     foreignKey: 'id',
   })
-  public team: HasOne<typeof Team>
+  public team!: HasOne<typeof Team>
 
   @column()
-  public teamId: number
+  public teamId!: number
 
   @hasOne(() => Fixture, {
     localKey: 'fixtureId',
     foreignKey: 'id',
   })
-  public fixture: HasOne<typeof Fixture>
+  public fixture!: HasOne<typeof Fixture>
 
   @column()
-  public fixtureId: number
+  public fixtureId!: number
 
   @column()
-  public playerNumber: number
+  public playerNumber!: number
 
   @column()
-  public playerName: string
+  public playerName!: string
 
   @column()
-  public substitute: boolean
+  public substitute!: boolean
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt!: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt!: DateTime
 
   public toDto(): LineupPlayerDto {
     return {

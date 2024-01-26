@@ -1,12 +1,8 @@
-import Fixture, { scheduledFixtureStatuses, inplayFixtureStatues } from '#app/Models/Fixture'
-import Event from '#app/Models/Event'
-import { DateTime } from 'luxon'
+import Fixture from '#models/Fixture'
 import { BaseCommand } from '@adonisjs/core/ace'
 import { CommandOptions } from '@adonisjs/core/types/ace'
 import axios from 'axios'
 import db from '@adonisjs/lucid/services/db'
-import Team from '#app/Models/Team'
-import Player from '#app/Models/Player'
 
 export default class UpdateLiveEvents extends BaseCommand {
   /**

@@ -1,7 +1,7 @@
 import fs from 'fs'
-import { BaseCommand } from "@adonisjs/core/ace";
-import { flags } from "@adonisjs/core/ace";
-import { CommandOptions } from "@adonisjs/core/types/ace";
+import { BaseCommand } from '@adonisjs/core/ace'
+import { flags } from '@adonisjs/core/ace'
+import { CommandOptions } from '@adonisjs/core/types/ace'
 
 export default class UpdatePlayers extends BaseCommand {
   /**
@@ -13,12 +13,12 @@ export default class UpdatePlayers extends BaseCommand {
    * Command description is displayed in the "help" output
    */
   public static description = ''
-    static options: CommandOptions = {
-          loadApp: false,
-          staysAlive: false,
-        };
+  static options: CommandOptions = {
+    loadApp: false,
+    staysAlive: false,
+  }
   @flags.number({ alias: 's', description: 'Page on the API to start at' })
-  public startPage: number
+  public startPage!: number
 
   private async fetchPage(page: number): Promise<{
     totalPages: number

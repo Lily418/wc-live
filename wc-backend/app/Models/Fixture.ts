@@ -50,65 +50,65 @@ export default class Fixture extends BaseModel {
   }
 
   @column({ isPrimary: true })
-  public id: number
+  public id!: number
 
   @column()
-  public footballApiId: number
+  public footballApiId!: number
 
   @hasOne(() => Team, {
     localKey: 'homeTeamId',
     foreignKey: 'id',
   })
-  public homeTeam: HasOne<typeof Team>
+  public homeTeam!: HasOne<typeof Team>
 
   @hasOne(() => Team, {
     localKey: 'awayTeamId',
     foreignKey: 'id',
   })
-  public awayTeam: HasOne<typeof Team>
+  public awayTeam!: HasOne<typeof Team>
 
   @hasMany(() => Event, {
     localKey: 'id',
     foreignKey: 'fixtureId',
   })
-  public events: HasMany<typeof Event>
+  public events!: HasMany<typeof Event>
 
   @hasMany(() => LineupPlayer, {
     localKey: 'id',
     foreignKey: 'fixtureId',
   })
-  public lineupPlayers: HasMany<typeof LineupPlayer>
+  public lineupPlayers!: HasMany<typeof LineupPlayer>
 
   @hasMany(() => LineupCoach, {
     localKey: 'id',
     foreignKey: 'fixtureId',
   })
-  public lineupCoaches: HasMany<typeof LineupCoach>
+  public lineupCoaches!: HasMany<typeof LineupCoach>
 
   @column()
-  public homeTeamId: number
+  public homeTeamId!: number
 
   @column()
-  public awayTeamId: number
+  public awayTeamId!: number
 
   @column()
-  public homeTeamScore: number | null
+  public homeTeamScore!: number | null
 
   @column()
-  public awayTeamScore: number | null
+  public awayTeamScore!: number | null
 
   @column.dateTime()
-  public kickoff: DateTime
+  public kickoff!: DateTime
 
   // Statues as per https://www.api-football.com/documentation-v3#tag/Fixtures/operation/get-fixtures
   @column()
-  public status: string
+  public status!: string
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt!: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt!: DateTime
 
   public toSummaryDto(): FixtureSummaryDto {
     return {

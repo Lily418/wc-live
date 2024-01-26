@@ -1,4 +1,4 @@
-import Team from '#app/Models/Team'
+import Team from '#models/Team'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import teams from '../seed_data/teams.json' assert { type: 'json' }
 

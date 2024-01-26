@@ -1,21 +1,19 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
-import Team from './Team.js'
-import { HasOne } from "@adonisjs/lucid/types/relations";
+import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Player extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id!: number
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt!: DateTime
 
   @column()
-  public footballApiId: number
+  public footballApiId!: number
 
   @column()
-  public name: string
+  public name!: string
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt!: DateTime
 }

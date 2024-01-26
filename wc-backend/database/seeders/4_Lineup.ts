@@ -1,9 +1,9 @@
 import fs from 'fs'
-import Fixture from '#app/Models/Fixture'
-import Team from '#app/Models/Team'
-import Player from '#app/Models/Player'
-import LineupPlayer from '#app/Models/LineupPlayer'
-import LineupCoach from '#app/Models/LineupCoach'
+import Fixture from '#models/Fixture'
+import Team from '#models/Team'
+import Player from '#models/Player'
+import LineupPlayer from '#models/LineupPlayer'
+import LineupCoach from '#models/LineupCoach'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
@@ -77,7 +77,7 @@ export default class extends BaseSeeder {
         }
 
         await Promise.all(
-          lineups.response.map(async (lineup) => {
+          lineups.response.map(async (lineup: any) => {
             await this.createLineupCoach({
               coachName: lineup.coach.name,
               teamFootballApiId: lineup.team.id,
@@ -85,7 +85,7 @@ export default class extends BaseSeeder {
             })
 
             await Promise.all(
-              lineup.startXI.map((startingPlayer) =>
+              lineup.startXI.map((startingPlayer: any) =>
                 this.createLineupPlayer({
                   playerFootballApiId: startingPlayer.player.id,
                   teamFootballApiId: lineup.team.id,
@@ -98,7 +98,7 @@ export default class extends BaseSeeder {
             )
 
             await Promise.all(
-              lineup.substitutes.map((substitute) =>
+              lineup.substitutes.map((substitute: any) =>
                 this.createLineupPlayer({
                   playerFootballApiId: substitute.player.id,
                   teamFootballApiId: lineup.team.id,

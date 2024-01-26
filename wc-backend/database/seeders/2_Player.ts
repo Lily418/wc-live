@@ -1,4 +1,4 @@
-import Player from '#app/Models/Player'
+import Player from '#models/Player'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import fs from 'fs'
 import he from 'he'

@@ -35,67 +35,67 @@ export default class Event extends BaseModel {
   }
 
   @column({ isPrimary: true })
-  public id: number
+  public id!: number
 
   @column()
-  public time_elapsed: number
+  public time_elapsed!: number
 
   @column()
-  public time_elapsed_extra: number | null
+  public time_elapsed_extra!: number | null
 
   @column()
-  public type: 'goal' | 'card' | 'subst'
+  public type!: 'goal' | 'card' | 'subst'
 
   @belongsTo(() => Team, {
     localKey: 'id',
     foreignKey: 'teamId',
   })
-  public team: BelongsTo<typeof Team>
+  public team!: BelongsTo<typeof Team>
 
   @column()
-  public teamId: number
+  public teamId!: number
 
   @belongsTo(() => Player, {
     localKey: 'id',
     foreignKey: 'playerId',
   })
-  public player: BelongsTo<typeof Player>
+  public player!: BelongsTo<typeof Player>
 
   @column()
-  public playerId: number
+  public playerId!: number
 
   @column()
-  public playerName: string
+  public playerName!: string
 
   @belongsTo(() => Player, {
     localKey: 'id',
     foreignKey: 'assistId',
   })
-  public assist: BelongsTo<typeof Player>
+  public assist!: BelongsTo<typeof Player>
 
   @column()
-  public assistId: number | null
+  public assistId!: number | null
 
   @column()
-  public assistName: string | null
+  public assistName!: string | null
 
   @belongsTo(() => Fixture, {
     localKey: 'id',
     foreignKey: 'fixtureId',
   })
-  public fixture: BelongsTo<typeof Fixture>
+  public fixture!: BelongsTo<typeof Fixture>
 
   @column()
-  public fixtureId: number
+  public fixtureId!: number
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt!: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt!: DateTime
 
   @column()
-  public detail: string | null
+  public detail!: string | null
 
   public toDto(): EventDto {
     return {

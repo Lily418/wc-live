@@ -19,7 +19,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
-import Fixture from '#app/Models/Fixture'
+import Fixture from '#models/Fixture'
 import { FixtureDto, FixturesDto } from '../../shared-types/fixtures-dto.js'
 
 router.get('/fixtures', async (): Promise<FixturesDto> => {

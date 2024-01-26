@@ -1,8 +1,6 @@
-import Fixture from '#app/Models/Fixture'
-import Event from '#app/Models/Event'
+import Fixture from '#models/Fixture'
+import Event from '#models/Event'
 import fs from 'fs'
-import Player from '#app/Models/Player'
-import Team from '#app/Models/Team'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {

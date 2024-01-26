@@ -1,6 +1,7 @@
 import fs from 'fs'
-import { BaseCommand } from "@adonisjs/core/ace";
-import { CommandOptions } from "@adonisjs/core/types/ace";
+import { BaseCommand } from '@adonisjs/core/ace'
+import { CommandOptions } from '@adonisjs/core/types/ace'
+import Fixture from '#models/Fixture'
 
 export default class UpdateEvents extends BaseCommand {
   /**
@@ -12,10 +13,10 @@ export default class UpdateEvents extends BaseCommand {
    * Command description is displayed in the "help" output
    */
   public static description = ''
-    static options: CommandOptions = {
-          loadApp: true,
-          staysAlive: false,
-        };
+  static options: CommandOptions = {
+    loadApp: true,
+    staysAlive: false,
+  }
 
   private async fetchEvents(fixtureId: number) {
     this.logger.info(`Fetching events for fixture ${fixtureId}`)
@@ -38,7 +39,6 @@ export default class UpdateEvents extends BaseCommand {
   }
 
   public async run() {
-    const { default: Fixture } = await import('App/Models/Fixture')
     const fixtures = await Fixture.query().where('status', '=', 'FT').andDoesntHave('events')
     console.log('fixtures', fixtures)
     for (const fixture of fixtures) {

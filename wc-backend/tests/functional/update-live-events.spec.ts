@@ -1,14 +1,14 @@
 import ace from '@adonisjs/core/services/ace'
 import { test } from '@japa/runner'
-import Fixture from '#app/Models/Fixture'
-import Event from '#app/Models/Event'
-import Team from '#app/Models/Team'
+import Fixture from '#models/Fixture'
+import Event from '#models/Event'
+import Team from '#models/Team'
 import UpdateLiveEvents from '../../commands/update-live-events.js'
 import nock from 'nock'
 import { DateTime } from 'luxon'
 import response from './fake-response/fixture1.json' assert { type: 'json' }
 import axios from 'axios'
-import Player from '#app/Models/Player'
+import Player from '#models/Player'
 
 axios.defaults.adapter = 'http'
 

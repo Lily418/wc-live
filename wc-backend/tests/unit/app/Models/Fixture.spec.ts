@@ -1,7 +1,7 @@
 import { test } from '@japa/runner'
-import Fixture from '#app/Models/Fixture'
+import Fixture from '#models/Fixture'
 import { DateTime } from 'luxon'
-import Team from '#app/Models/Team'
+import Team from '#models/Team'
 
 test.group('Fixture', (group) => {
   group.each.setup(async () => {
