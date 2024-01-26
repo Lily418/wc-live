@@ -8,7 +8,8 @@
 | command to run this file and monitor file changes
 |
 */
-
+import { createServer as createHttpServer } from 'http'
+import { createServer as createHttpsServer } from 'https'
 import 'reflect-metadata'
 import { Ignitor, prettyPrintError } from '@adonisjs/core'
 
@@ -38,7 +39,23 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
     app.listenIf(app.managedByPm2, 'SIGINT', () => app.terminate())
   })
   .httpServer()
-  .start()
+  .start((handle) => {
+    if (process.env.NODE_ENV === 'development') {
+      return createHttpServer(handle)
+    }
+
+    if (!process.env.SSL_KEY_PATH || !process.env.SSL_CERT_PATH) {
+      throw new Error('SSL_KEY_PATH and SSL_CERT_PATH must be set in production mode')
+    }
+
+    return createHttpsServer(
+      {
+        key: process.env.SSL_KEY_PATH,
+        cert: process.env.SSL_CERT_PATH,
+      },
+      handle
+    )
+  })
   .catch((error) => {
     process.exitCode = 1
     prettyPrintError(error)
