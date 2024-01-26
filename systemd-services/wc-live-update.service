@@ -3,10 +3,6 @@ Description=WC Live Update Events
 After=postgresql@15-main.service
 StartLimitIntervalSec=0
 
-[Timer]
-OnBootSec=0
-OnUnitActiveSec=60
-
 [Service]
 Type=simple
 User=root
