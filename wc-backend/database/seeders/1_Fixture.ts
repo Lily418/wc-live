@@ -4,7 +4,6 @@ import Fixture from '#models/Fixture'
 
 export default class extends BaseSeeder {
   public async run() {
-    await Fixture.truncate()
     await Promise.all(
       fixtures.map(async (fixture: any) => {
         const fixtureModel = new Fixture()

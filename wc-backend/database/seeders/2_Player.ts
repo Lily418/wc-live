@@ -5,7 +5,6 @@ import he from 'he'
 
 export default class extends BaseSeeder {
   public async run() {
-    await Player.truncate()
     await Promise.all(
       fs.readdirSync('./database/seed_data/players').map(async (file) => {
         const playersFile = JSON.parse(

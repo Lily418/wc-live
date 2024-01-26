@@ -4,7 +4,6 @@ import teams from '../seed_data/teams.json' assert { type: 'json' }
 
 export default class extends BaseSeeder {
   public async run() {
-    await Team.truncate()
     await Promise.all(
       teams.map((team: any) =>
         Team.create({
