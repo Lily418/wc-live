@@ -1,0 +1,16 @@
+[Unit]
+Description=WC Live Update Events
+After=postgresql@15-main.service
+StartLimitIntervalSec=0
+
+[Timer]
+OnBootSec=0
+OnUnitActiveSec=60
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/env -S /root/.nvm/versions/node/v20.11.0/bin/node /root/wc-live/wc-backend/build/ace update:live_events
+
+[Install]
+WantedBy=multi-user.target

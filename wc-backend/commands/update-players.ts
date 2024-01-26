@@ -14,7 +14,7 @@ export default class UpdatePlayers extends BaseCommand {
    */
   public static description = ''
   static options: CommandOptions = {
-    loadApp: false,
+    startApp: true,
     staysAlive: false,
   }
   @flags.number({ alias: 's', description: 'Page on the API to start at' })

@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { BaseCommand } from "@adonisjs/core/ace";
-import { CommandOptions } from "@adonisjs/core/types/ace";
+import { BaseCommand } from '@adonisjs/core/ace'
+import { CommandOptions } from '@adonisjs/core/types/ace'
 
 export default class UpdateFixtures extends BaseCommand {
   /**
@@ -12,10 +12,10 @@ export default class UpdateFixtures extends BaseCommand {
    * Command description is displayed in the "help" output
    */
   public static description = ''
-    static options: CommandOptions = {
-          loadApp: true,
-          staysAlive: false,
-        };
+  static options: CommandOptions = {
+    startApp: true,
+    staysAlive: false,
+  }
 
   public async run() {
     this.logger.info(`Updating fixtures`)

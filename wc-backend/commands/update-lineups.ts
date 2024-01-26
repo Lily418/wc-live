@@ -14,7 +14,7 @@ export default class UpdateEvents extends BaseCommand {
    */
   public static description = ''
   static options: CommandOptions = {
-    loadApp: true,
+    startApp: true,
     staysAlive: false,
   }
 

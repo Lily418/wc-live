@@ -15,17 +15,18 @@ export default class UpdateLiveEvents extends BaseCommand {
    */
   public static description = ''
   static options: CommandOptions = {
-    loadApp: true,
+    startApp: true,
     staysAlive: false,
   }
 
   public async run() {
     const inProgress = await Fixture.getFixturesInPlay()
+
+    this.logger.info(`Updating ${JSON.stringify(inProgress)} fixtures`)
+
     const ids = inProgress.reduce((acc, fixture) => {
       return acc.length === 0 ? `${fixture.footballApiId}` : `${acc}-${fixture.footballApiId}`
     }, '')
-
-    console.log('ids', ids)
 
     const response = await axios.get(`https://v3.football.api-sports.io/fixtures?ids=${ids}`, {
       headers: {
