@@ -1,0 +1,14 @@
+[Unit]
+Description=WC Live React Web App
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/usr/bin/env http-server . -S -p 443 -C /etc/letsencrypt/live/womens-championship.live/fullchain.pem -K /etc/letsencrypt/live/womens-championship.live/privkey.pem
+
+[Install]
+WantedBy=multi-user.target

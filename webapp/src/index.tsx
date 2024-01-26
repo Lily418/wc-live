@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
 );
 
 const fixturesLoader = async () => {
-  const fixtures = await fetch("http://127.0.0.1:3333/fixtures");
+  const fixtures = await fetch(`${process.env.REACT_APP_WC_LIVE_API}/fixtures`);
   const result = await fixtures.json();
   return result;
 };
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     element: <FixtureDetails />,
     loader: async ({ params }) => {
       const fixtures = await fetch(
-        `http://127.0.0.1:3333/fixtures/${params.id}`
+        `${process.env.REACT_APP_WC_LIVE_API}/fixtures/${params.id}`
       );
       const result = await fixtures.json();
       return result;
