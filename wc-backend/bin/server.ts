@@ -8,6 +8,7 @@
 | command to run this file and monitor file changes
 |
 */
+import fs from 'fs'
 import { createServer as createHttpServer } from 'http'
 import { createServer as createHttpsServer } from 'https'
 import 'reflect-metadata'
@@ -50,8 +51,8 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
 
     return createHttpsServer(
       {
-        key: process.env.SSL_KEY_PATH,
-        cert: process.env.SSL_CERT_PATH,
+        key: fs.readFileSync(process.env.SSL_KEY_PATH, 'utf8'),
+        cert: fs.readFileSync(process.env.SSL_CERT_PATH, 'utf8'),
       },
       handle
     )
