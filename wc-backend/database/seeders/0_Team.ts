@@ -6,7 +6,7 @@ export default class extends BaseSeeder {
   public async run() {
     await Team.truncate()
     await Promise.all(
-      teams.map((team) =>
+      teams.map((team: any) =>
         Team.create({
           footballApiId: team.team.id,
           name: team.team.name,
